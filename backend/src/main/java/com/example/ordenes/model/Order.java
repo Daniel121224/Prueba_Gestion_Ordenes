@@ -1,52 +1,80 @@
 package com.example.ordenes.model;
 
-import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
-@Entity
-public class order {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+import java.util.ArrayList;
+import java.util.List;
+
+public class Order {
+
     private Long id;
 
+    @NotBlank(message = "Customer name is required")
     private String customerName;
 
-    //dicciionario de items: "name": "item1", "quantity": 2, "price": 10.0
-    @ElementCollection
-    private java.util.Map<String, Item> items;
-
-    @Embeddable
-    public static class Item implements java.io.Serializable {
-        private static final long serialVersionUID = 1L;
-
-        private Integer quantity;
-        private Double price;
-
-        public Item() {}
-
-        public Item(Integer quantity, Double price) {
-            this.quantity = quantity;
-            this.price = price;
-        }
-
-        public Integer getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(Integer quantity) {
-            this.quantity = quantity;
-        }
-
-        public Double getPrice() {
-            return price;
-        }
-
-        public void setPrice(Double price) {
-            this.price = price;
-        }
-    }
+    @Valid
+    @NotEmpty(message = "Order must contain at least one item")
+    private List<Item> items = new ArrayList<>();
 
     private Double total;
 
     private String status;
+
+    public Order() {
+    }
+
+    public Order(Long id,
+                 String customerName,
+                 List<Item> items,
+                 Double total,
+                 String status) {
+
+        this.id = id;
+        this.customerName = customerName;
+        this.items = items;
+        this.total = total;
+        this.status = status;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
