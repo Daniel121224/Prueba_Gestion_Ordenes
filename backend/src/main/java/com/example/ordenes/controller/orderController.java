@@ -1,5 +1,6 @@
 package com.example.ordenes.controller;
 
+import com.example.ordenes.dto.StatusUpdateRequest;
 import com.example.ordenes.model.Order;
 import com.example.ordenes.service.OrderService;
 import jakarta.validation.Valid;
@@ -44,6 +45,13 @@ public class OrderController {
     @DeleteMapping("/{id}")
     public void deleteOrder(@PathVariable Long id) {
         service.deleteOrder(id);
+    }
+
+    @PatchMapping("/{id}/status")
+    public Order updateOrderStatus(
+            @PathVariable Long id,
+            @RequestBody StatusUpdateRequest request) {
+        return service.updateOrderStatus(id, request.getStatus());
     }
 }
 

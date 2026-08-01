@@ -62,4 +62,11 @@ public class AuthController {
         );
     }
 
+    @PostMapping("/logout")
+	public ResponseEntity<Void> logout() {
+	// JWT es stateless, el cliente debe eliminar el token.
+	// Solo respondemos 200 OK.
+	return ResponseEntity.ok().build();
+	}
+
 }
